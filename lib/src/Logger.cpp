@@ -14,11 +14,12 @@ void mylog::Logger::setDefaultLogLevel(Level defaultLevel)
 std::string mylog::util::getCurrentDateTime()
 {
     time_t now = time(NULL);
-	struct tm* time = localtime(&now);
+	struct tm* time = localtime(&now); 
 	char buf[20];
 	strftime(buf, sizeof(buf), "%d.%m.%Y %H:%M:%S", time);
 	return buf;
 }
+
 void mylog::Logger::writeLog(const std::string& message, Level level)
 {
     if(level >= defaultLevel_){
@@ -48,6 +49,7 @@ std::string mylog::util::logLevelToString(Level level)
 
 std::optional<mylog::Level> mylog::util::stringToLogLevel(std::string_view string)
 {
+    // Да-да, копирование, зато удобно
     std::string temp{string};
     std::transform(temp.begin(),temp.end(),temp.begin(),::toupper);
     if(temp == "INFO") return Level::INFO;

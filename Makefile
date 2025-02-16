@@ -3,13 +3,13 @@ OUT_DIR = out
 INCLUDE = lib/include
 LIB_SOURCES = lib/src
 APPLICATION_SOURCES = app
-# Исполняемый файл и библиотеку наверно стоит вывести в отдельную папку, отделив от временных файлов
 
 # Компиляция и сборка приложения
 app: $(OUT_DIR)/app
 $(OUT_DIR)/app: $(APPLICATION_SOURCES)/Application.cpp | lib
 	g++ -std=c++17 -o $@ $< -I$(INCLUDE) -L$(OUT_DIR) -llogger -Wl,-rpath=$(PWD)/$(OUT_DIR)
 
+# Отдельно библиотеки
 lib: $(OUT_DIR)/liblogger.so
 $(OUT_DIR)/liblogger.so: $(BUILD_DIR)/logger.o | $(OUT_DIR)
 	g++ -shared -o $@ $^

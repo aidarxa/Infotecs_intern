@@ -8,6 +8,7 @@
 
 ThreadSafeQueue<std::function<void()>> queue;
 
+// Цикл для потока
 void run(){
     while (true) {
         auto task = queue.wait_and_pop();
@@ -44,15 +45,17 @@ int main(int argc, char* argv[]){
     
     // quit чтобы завершить работу
     while (true)
-        {
-            // Слушаем пользователя
+    {
+        // Слушаем пользователя
         std::string input, inputLevel;
         getline(std::cin,input);
         if(input == "quit") break;
+
         // Ищем первый пробел и запоминаем уровень доступа
         auto pos = input.find_first_of(" ");
         inputLevel = input.substr(0,pos);
-        //Проверяем задан ли уровень доступа, если да - пишем с ним, иначе передаем все сообщение целиком
+
+        //Проверяем задан ли уровень доступа, если да - пишем с ним, иначе передаем всё сообщение целиком
         if(auto level = mylog::util::stringToLogLevel(inputLevel)) {
             queue.push(
                 [message = input.substr(pos+1,input.length()),level = *level,logger]
@@ -68,6 +71,7 @@ int main(int argc, char* argv[]){
             );
         }
     }
+    // Завершаем работу
     queue.shutdown();
     t.join();
     return 0;

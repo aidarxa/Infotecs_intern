@@ -3,9 +3,9 @@
 **mylog** – библиотека логирования на C++, поддерживающая пользовательские потоки вывода.
 
 Библиотека поддерживает следующие уровни важности:  
-<span style="color: #B2FBA5"> INFO </span>  
-<span style="color: #FFC067"> WARNING </span>  
-<span style="color: #fe6761"> ERROR </span>  
+${\small\textsf{\color{#B2FBA5}INFO}}$  
+${\small\textsf{\color{#FFC067}WARNING}}$  
+${\small\textsf{\color{#fe6761}ERROR}}$
 
 Документация по тестовому приложению находится [здесь](application.md#приложение-для-тестирования-бибилиотеки).
 ## Установка

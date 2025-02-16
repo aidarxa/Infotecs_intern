@@ -39,9 +39,9 @@ make
 > [!TIP]  
 > Уровни важности регистронезависимы. Уровни важности ниже установленного по умолчанию игнорируются, нумерация идёт сверху вниз.   
 > Приложение поддерживает следующие уровни важности:  
-> <span style="color: #B2FBA5"> INFO </span>  = 0  
-> <span style="color: #FFC067"> WARNING </span>  = 1  
-> <span style="color: #fe6761"> ERROR </span>  = 2
+> ${\small\textsf{\color{#B2FBA5}INFO}}$  
+> ${\small\textsf{\color{#FFC067}WARNING}}$  
+> ${\small\textsf{\color{#fe6761}ERROR}}$
 ## Использование
 Псоле запуска приложение ожидает ввода от пользователя в формате:
 ``` 

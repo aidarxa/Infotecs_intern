@@ -5,17 +5,25 @@
 #include <mutex>
 #include <optional>
 
-// Версия потокобезопасной очереди с кучей блокировок....
+// Потокобезопасная очередь, почти стандартный интерфейс
 template <class T>
 class ThreadSafeQueue final{
+
     public:
     void push(const T& object);
+
+    // pop() + front(), поскольку стандартный набор операций: queue.front() + queue.pop() небезопасен в многопотоке
     std::optional<T> try_pop();
-    std::optional<T> wait_and_pop();
-    // Только моментальный снимок, состояние может измениться сразу после выхода
+    //То же самое что и try_pop(), но ждёт пока появится элемент в очереди. Требует вызова shutdown() для безопасного завершения работы
+    std::optional<T> wait_and_pop(); 
+
+    // Только моментальный снимок, состояние может измениться сразу после выхода, наверное стоит вообще убрать...
     bool empty() const;
+
     template <typename... Args>
     void emplace(Args&&... args);
+
+    // Завершает работу очереди, устанавливая stop_ в true. Использование очереди после вызова shutdown() - UB
     void shutdown();
 
     ThreadSafeQueue() = default;
