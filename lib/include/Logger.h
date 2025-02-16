@@ -1,3 +1,5 @@
+#pragma once
+
 #include <fstream>
 #include <chrono>
 #include <optional>
@@ -22,41 +24,44 @@ namespace mylog{
         private:
         std::string filename_;
     };
-    class logger_exception:std::exception{
+    // Исключения для FileOutput
+    class logger_exception: public std::exception{
         public:
         logger_exception(std::string_view message);
         const char* what()const noexcept override;
         private:
         std::string message_;
     };
-
+    // Список доступных уровеней важности
     enum class Level{
         INFO,
         WARNING,
         ERROR
     };
-
-    class Logger final{
+    // Logger - осуществляет запись пользовательских сообщений в поток вывода
+    // Формат вывода: 
+    // [дд.мм.гггг чч:мм:сс] Level: message
+    class Logger {
         public:
-
-        Logger(ILogOutput& output,Level defaultLevel);
-        ~Logger() = default;
-
+    
+        Logger(ILogOutput& output, Level defaultLevel);
+        virtual ~Logger() = default;
+    
         Logger(const Logger& cont) = default;
         Logger& operator=(const Logger& other) = default;
-
+    
         Logger(Logger&& cont) = default;
         Logger& operator=(Logger&& other) = default;
-
+    
         void setDefaultLogLevel(Level defaultLevel);
-        void writeLog(const std::string& message, Level level);
+        virtual void writeLog(const std::string& message, Level level);
         void writeLog(const std::string& message);
-
-        private:
+    
+        protected:
         ILogOutput& output_;
         Level defaultLevel_;
     };
-
+    // Вспомогательные функции
     namespace util{
         std::string getCurrentDateTime();
         std::string logLevelToString(Level level);

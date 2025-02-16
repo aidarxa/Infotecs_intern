@@ -26,9 +26,9 @@ void mylog::Logger::writeLog(const std::string& message, Level level)
     }
 }
 
-void mylog::Logger::writeLog(const std::string& message)
+void mylog::Logger::writeLog(const std::string &message)
 {
-    writeLog(message,defaultLevel_);
+    writeLog(message, defaultLevel_);
 }
 
 std::string mylog::util::logLevelToString(Level level)
@@ -49,7 +49,7 @@ std::string mylog::util::logLevelToString(Level level)
 std::optional<mylog::Level> mylog::util::stringToLogLevel(std::string_view string)
 {
     std::string temp{string};
-    std::transform(string.begin(),string.end(),temp.begin(),::toupper);
+    std::transform(temp.begin(),temp.end(),temp.begin(),::toupper);
     if(temp == "INFO") return Level::INFO;
     else if(temp == "WARNING") return Level::WARNING;
     else if(temp == "ERROR") return Level::ERROR;

@@ -1,7 +1,9 @@
-#include "Logger.h"
 #include <iostream>
 #include <thread>
 #include <atomic>
+#include <functional>
+#include <string>
+#include "Logger.h"
 #include "ThreadSafeQueue.h"
 
 ThreadSafeQueue<std::function<void()>> queue;
@@ -22,7 +24,6 @@ void run(){
 
 //Параметры - имя файла журнала и уровень важности по умолчанию
 int main(int argc, char* argv[]){
-
     // Проверки ввода
     if(argc != 3){
         std::cout << "Неверное количество аргументов\n";
@@ -43,17 +44,28 @@ int main(int argc, char* argv[]){
     
     // quit чтобы завершить работу
     while (true)
-    {
-        std::string input,inputLevel;
+        {
+            // Слушаем пользователя
+        std::string input, inputLevel;
         getline(std::cin,input);
         if(input == "quit") break;
+        // Ищем первый пробел и запоминаем уровень доступа
         auto pos = input.find_first_of(" ");
         inputLevel = input.substr(0,pos);
+        //Проверяем задан ли уровень доступа, если да - пишем с ним, иначе передаем все сообщение целиком
         if(auto level = mylog::util::stringToLogLevel(inputLevel)) {
-            queue.push([message = input.substr(pos+1,input.length()),level = *level,logger]()mutable{logger.writeLog(message,level);});
+            queue.push(
+                [message = input.substr(pos+1,input.length()),level = *level,logger]
+                ()mutable
+                {logger.writeLog(message,level);}
+            );
         }
         else{
-            queue.push([message = input,logger]()mutable{logger.writeLog(message);});
+            queue.push(
+                [message = input,logger]
+                ()mutable
+                {logger.writeLog(message);}
+            );
         }
     }
     queue.shutdown();
