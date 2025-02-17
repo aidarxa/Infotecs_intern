@@ -1,6 +1,5 @@
 #include <iostream>
 #include <thread>
-#include <atomic>
 #include <functional>
 #include <string>
 #include "Logger.h"
@@ -18,7 +17,7 @@ void run(){
         try{
             (*task)();
         }catch(const mylog::logger_exception& e){
-            std::cerr << e.what();
+            std::cerr << e.what() << "\n";
         }
     }
 }

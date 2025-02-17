@@ -4,6 +4,7 @@
 #include <condition_variable>
 #include <mutex>
 #include <optional>
+#include <atomic>
 
 // Потокобезопасная очередь, почти стандартный интерфейс
 template <class T>

@@ -7,7 +7,7 @@ APPLICATION_SOURCES = app
 # Компиляция и сборка приложения
 app: $(OUT_DIR)/app
 $(OUT_DIR)/app: $(APPLICATION_SOURCES)/Application.cpp | lib
-	g++ -std=c++17 -o $@ $< -I$(INCLUDE) -L$(OUT_DIR) -llogger -Wl,-rpath=$(PWD)/$(OUT_DIR)
+	g++ -std=c++17 -o $@ $< -I$(INCLUDE) -L$(OUT_DIR) -llogger -Wl,-rpath=$(PWD)/$(OUT_DIR) -pthread
 
 # Отдельно библиотеки
 lib: $(OUT_DIR)/liblogger.so
